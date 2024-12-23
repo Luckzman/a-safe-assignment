@@ -9,7 +9,7 @@ declare module 'next-auth' {
       name: string
       role: string
       token: string
-      photo?: string
+      photo: string | null | undefined
     }
     accessToken: string
   }
@@ -20,6 +20,7 @@ declare module 'next-auth' {
     name: string
     role: string
     token: string
+    photo: string | null | undefined
   }
 }
 

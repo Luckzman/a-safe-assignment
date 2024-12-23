@@ -9,6 +9,8 @@ interface PaginationParams {
   sortOrder?: 'asc' | 'desc';
 }
 
+const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3000/api';
+
 export const getUsers = async (token: string, params: PaginationParams) => {
   const queryParams = new URLSearchParams({
     page: params.page.toString(),
@@ -20,7 +22,7 @@ export const getUsers = async (token: string, params: PaginationParams) => {
   });
 
   const response = await axios.get(
-    `http://localhost:5000/api/users?${queryParams.toString()}`,
+    `${API_URL}/users?${queryParams.toString()}`,
     {
       headers: {
         Authorization: `Bearer ${token}`,

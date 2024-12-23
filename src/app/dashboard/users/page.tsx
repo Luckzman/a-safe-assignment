@@ -1,15 +1,12 @@
 'use client'
 
 import Image from 'next/image'
-import { 
-  HiOutlinePencil, 
-  HiOutlineKey, 
-  HiOutlineTrash, 
+import {
+  HiOutlinePencil,
+  HiOutlineKey,
+  HiOutlineTrash,
   HiDotsVertical,
   HiOutlineSearch,
-  HiOutlineUpload,
-  HiOutlineDownload,
-  HiOutlineFilter,
   HiOutlineUserAdd
 } from 'react-icons/hi'
 import { useEffect, useState } from 'react';
@@ -35,6 +32,8 @@ interface Pagination {
 }
 
 interface FilterParams {
+  page?: number;
+  limit?: number;
   search?: string;
   status?: 'ACTIVE' | 'PENDING' | 'INACTIVE';
   sortBy?: string;
@@ -75,7 +74,7 @@ export default function UsersPage() {
         setCount(data.counts);
         setUsers(data.users);
         setPagination(data.pagination);
-      } catch (err) {
+      } catch {
         setError('Failed to fetch users');
       } finally {
         setLoading(false);
@@ -89,7 +88,7 @@ export default function UsersPage() {
     if (selectedStatus) params.status = selectedStatus as 'ACTIVE' | 'PENDING' | 'INACTIVE';
     if (sortConfig.field) {
       params.sortBy = sortConfig.field;
-      params.sortOrder = sortConfig.order;
+      params.sortOrder = sortConfig.order as 'asc' | 'desc';
     }
     
     const delayDebounceFn = setTimeout(() => {
@@ -97,6 +96,7 @@ export default function UsersPage() {
     }, 3000);
 
     return () => clearTimeout(delayDebounceFn);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [searchTerm, selectedStatus, sortConfig]);
 
   const handleSort = (field: string) => {
@@ -160,7 +160,7 @@ export default function UsersPage() {
         </div>
 
         <div className="relative lg:hidden">
-          <button 
+          <button
             onClick={() => setIsActionsOpen(!isActionsOpen)}
             className="dashboard-button-secondary flex items-center gap-2"
           >
@@ -170,7 +170,7 @@ export default function UsersPage() {
 
           {isActionsOpen && (
             <div className="absolute right-0 mt-2 w-48 rounded-lg border border-[var(--border)] bg-[var(--surface)] p-2 shadow-lg">
-              <button 
+              <button
                 onClick={() => setIsActionsOpen(false)}
                 className="flex w-full items-center px-4 py-2 text-sm text-[var(--text)] hover:bg-[var(--border)]"
               >
@@ -209,7 +209,7 @@ export default function UsersPage() {
             <thead>
               <tr className="border-b border-[var(--border)] bg-[var(--background)]">
                 <th className="px-4 py-3 text-left text-sm font-medium text-[var(--textSecondary)]">Photo</th>
-                <th 
+                <th
                   className="px-4 py-3 text-left text-sm font-medium text-[var(--textSecondary)] cursor-pointer"
                   onClick={() => handleSort('firstName')}
                 >
@@ -272,8 +272,8 @@ export default function UsersPage() {
         {/* Mobile View */}
         <div className="md:hidden">
           {users.map((user) => (
-            <div 
-              key={user.id} 
+            <div
+              key={user.id}
               className="border-b border-[var(--border)] p-4 last:border-0"
             >
               <div className="flex items-start gap-4">
@@ -318,7 +318,6 @@ export default function UsersPage() {
                     </div>
                 </div>
               </div>
-              
             </div>
           ))}
         </div>

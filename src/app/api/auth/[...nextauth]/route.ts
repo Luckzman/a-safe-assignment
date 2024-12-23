@@ -59,11 +59,11 @@ const handler = NextAuth({
     },
     async session({ session, token }) {
       session.user.id = token.id;
-      session.user.email = token.email;
-      session.user.name = token.name;
-      session.user.role = token.role;
-      session.user.token = token.token;
-      session.user.photo = token.photo;
+      session.user.email = token.email as string;
+      session.user.name = token.name as string;
+      session.user.role = token.role as string;
+      session.user.token = token.token as string;
+      session.user.photo = token.photo as string | null | undefined;
       return session;
     }
   }
