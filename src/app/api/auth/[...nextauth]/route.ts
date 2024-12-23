@@ -13,7 +13,10 @@ const handler = NextAuth({
       },
       async authorize(credentials) {
         try {
-          const res = await axios.post('http://localhost:5000/api/auth/login', {
+          const baseUrl = process.env.NODE_ENV === 'production' 
+            ? process.env.NEXT_PUBLIC_API_URL 
+            : 'http://localhost:5000'
+          const res = await axios.post(`${baseUrl}/api/auth/login`, {
             email: credentials?.email,
             password: credentials?.password,
           })
