@@ -2,20 +2,101 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
-@media (prefers-color-scheme: dark) {
+@layer base {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    --background: #ffffff;
+    --surface: #ffffff;
+    --primary: #00b3b3;
+    --primaryHover: #009999;
+    --text: #171717;
+    --textSecondary: #666666;
+    --border: #e5e5e5;
+    --error: #ef4444;
+    --success: #22c55e;
+  }
+
+  body {
+    background-color: var(--background);
+    color: var(--text);
   }
 }
 
-body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
+@layer components {
+  .form-container {
+    @apply w-full max-w-[400px] rounded-lg bg-[var(--surface)] p-6;
+  }
+
+  .form-input {
+    @apply w-full rounded border border-[var(--border)] px-3 py-2 text-sm text-[var(--text)] focus:border-[var(--primary)] focus:outline-none;
+  }
+
+  .btn-primary {
+    @apply w-full rounded bg-[var(--primary)] py-2 text-sm font-medium text-white hover:bg-[var(--primaryHover)];
+  }
+
+  .text-error {
+    @apply text-[var(--error)];
+  }
+
+  .text-success {
+    @apply text-[var(--success)];
+  }
+
+  .nav-button {
+    @apply rounded-full p-2 text-[var(--textSecondary)] hover:bg-[var(--border)];
+  }
+
+  .nav-icon {
+    @apply h-5 w-5 text-[var(--textSecondary)];
+  }
+
+  .dashboard-container {
+    @apply container mx-auto px-4;
+  }
+
+  .dashboard-title {
+    @apply text-2xl font-semibold text-[var(--text)];
+  }
+
+  .dashboard-subtitle {
+    @apply mt-1 text-sm text-[var(--textSecondary)];
+  }
+
+  .dashboard-button {
+    @apply rounded-md px-4 py-2 text-sm font-medium transition-colors;
+  }
+
+  .dashboard-button-primary {
+    @apply dashboard-button bg-[var(--primary)] text-white hover:bg-[var(--primaryHover)];
+  }
+
+  .dashboard-button-secondary {
+    @apply dashboard-button border border-[var(--border)] text-[var(--text)] hover:bg-[var(--border)];
+  }
+
+  .dashboard-table {
+    @apply w-full rounded-lg border border-[var(--border)] bg-[var(--surface)];
+  }
+
+  .dashboard-table-header {
+    @apply border-b border-[var(--border)] bg-[var(--background)];
+  }
+
+  .dashboard-table-cell {
+    @apply px-4 py-3 text-sm;
+  }
+}
+
+@layer utilities {
+  .transition-transform {
+    transition-property: transform;
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+    transition-duration: 300ms;
+  }
+
+  .transition-opacity {
+    transition-property: opacity;
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+    transition-duration: 300ms;
+  }
 }
